@@ -648,3 +648,7 @@ body{
 .produtos-relacionados {
     padding-top: 40px;
 }
+
+.imagem-modal {
+    display: none;
+}

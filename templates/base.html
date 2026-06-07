@@ -32,7 +32,7 @@
 
     {% include 'includes/footer.html' %}
 
-    <div id="imagemModal" class="imagem-modal" onclick="fecharImagem()">
+    <div id="imagemModal" class="imagem-modal" style="display:none;" onclick="fecharImagem()">
         <span onclick="fecharImagem()">&times;</span>
         <img id="imagemModalConteudo" src="" alt="Imagem ampliada" onclick="event.stopPropagation()">
     </div>

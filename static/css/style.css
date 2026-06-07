@@ -472,3 +472,8 @@ body{
         text-align:center;
     }
 }
+
+.page-section{
+    padding-top:170px;
+    min-height:100vh;
+}

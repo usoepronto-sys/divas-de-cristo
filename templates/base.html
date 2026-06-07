@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Divas de Cristo{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+{% include 'includes/header.html' %}
+
+{% block content %}
+{% endblock %}
+
+{% include 'includes/footer.html' %}
+
+<div id="imagemModal" class="imagem-modal" onclick="fecharImagem()">
+    <span>&times;</span>
+    <img id="imagemModalConteudo" src="" alt="Imagem ampliada">
+</div>
+
+<script>
+function abrirImagem(src){
+    document.getElementById('imagemModal').style.display = 'flex';
+    document.getElementById('imagemModalConteudo').src = src;
+}
+
+function fecharImagem(){
+    document.getElementById('imagemModal').style.display = 'none';
+}
+</script>
+
+</body>
+</html>

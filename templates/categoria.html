@@ -1,67 +1,26 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ categoria.nome }} | Divas de Cristo</title>
+{% block title %}{{ categoria.nome }} | Divas de Cristo{% endblock %}
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+{% block content %}
 
-<body>
-
-<header class="header">
-    <div class="navbar">
-        <div class="logo">Divas de Cristo</div>
-
-        <nav class="menu">
-            <a href="/">Início</a>
-            <a href="/#colecao">Coleção</a>
-            <a href="/#produtos">Destaques</a>
-            <a href="/#sobre">Sobre</a>
-            <a href="/admin/" target="_blank">Admin</a>
-            <a class="menu-btn" href="https://wa.me/5519994120578" target="_blank">WhatsApp</a>
-        </nav>
-    </div>
-</header>
-
-<section class="section page-section">
+<section class="section categoria-page">
     <div class="section-title">
-        <span>Categoria</span>
+        <span>Coleção</span>
         <h2>{{ categoria.nome }}</h2>
-        <p>Produtos disponíveis nesta coleção.</p>
+        <p>Peças selecionadas especialmente para você.</p>
     </div>
 
     <div class="produtos-grid">
         {% for produto in produtos %}
-        <div class="produto-card">
-            <div class="produto-img">
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
-            </div>
-
-            <div class="produto-info">
-                <h3>{{ produto.nome }}</h3>
-                <p>{{ produto.descricao }}</p>
-
-                <div class="produto-footer">
-                    <div class="preco">R$ {{ produto.preco }}</div>
-                    <a href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome }}" target="_blank">
-                        Reservar
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% include 'includes/produto_card.html' %}
         {% empty %}
         <div class="empty-message">
-            <h3>Nenhum produto disponível</h3>
-            <p>Em breve teremos novidades nesta categoria.</p>
+            <h3>Nenhum produto nesta categoria</h3>
+            <p>Em breve teremos novidades por aqui.</p>
         </div>
         {% endfor %}
     </div>
 </section>
 
-</body>
-</html>
+{% endblock %}

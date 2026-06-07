@@ -1,0 +1,24 @@
+<div class="produto-card">
+    <div class="produto-img">
+        {% if produto.imagem %}
+            <img
+                src="{{ produto.imagem.url }}"
+                alt="{{ produto.nome }}"
+                onclick="abrirImagem('{{ produto.imagem.url }}')"
+            >
+        {% endif %}
+    </div>
+
+    <div class="produto-info">
+        <h3>{{ produto.nome }}</h3>
+        <p>{{ produto.descricao }}</p>
+
+        <div class="produto-footer">
+            <div class="preco">R$ {{ produto.preco }}</div>
+
+            <a href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome }}" target="_blank">
+                Reservar
+            </a>
+        </div>
+    </div>
+</div>

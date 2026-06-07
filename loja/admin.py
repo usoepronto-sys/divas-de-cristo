@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
+
 from .models import Categoria, Produto, FotoProduto
 
 
@@ -199,3 +200,29 @@ class UsuarioAdmin(UserAdmin):
             ),
         }),
     )
+
+
+admin.site.index_template = 'admin/dashboard.html'
+
+admin.site.site_header = 'Divas de Cristo'
+admin.site.site_title = 'Divas de Cristo Admin'
+admin.site.index_title = 'Painel Administrativo'
+
+
+original_index = admin.site.index
+
+
+def dashboard_index(request, extra_context=None):
+    extra_context = extra_context or {}
+
+    extra_context['total_produtos'] = Produto.objects.count()
+    extra_context['produtos_disponiveis'] = Produto.objects.filter(disponivel=True).count()
+    extra_context['produtos_indisponiveis'] = Produto.objects.filter(disponivel=False).count()
+    extra_context['produtos_destaque'] = Produto.objects.filter(destaque=True, disponivel=True).count()
+    extra_context['total_categorias'] = Categoria.objects.count()
+    extra_context['ultimos_produtos'] = Produto.objects.select_related('categoria').order_by('-criado_em')[:5]
+
+    return original_index(request, extra_context)
+
+
+admin.site.index = dashboard_index

@@ -22,7 +22,7 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
     'jazzmin',
 
-    'cloudinary_storage',
+    #'cloudinary_storage',
     'cloudinary',
 
     'django.contrib.admin',
@@ -118,7 +118,7 @@ STORAGES = {
     },
 }
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

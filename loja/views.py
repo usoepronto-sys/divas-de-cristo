@@ -1,15 +1,34 @@
-from django.shortcuts import render
-from .models import Produto
+from django.shortcuts import render, get_object_or_404
+from .models import Produto, Categoria
 
 
 def home(request):
-    produtos_destaque = Produto.objects.filter(
-        disponivel=True,
-        destaque=True
+    categorias = Categoria.objects.filter(ativa=True)
+
+    produtos = Produto.objects.filter(
+        destaque=True,
+        disponivel=True
     ).order_by('ordem', '-criado_em')
 
     contexto = {
-        'produtos_destaque': produtos_destaque,
+        'categorias': categorias,
+        'produtos': produtos,
     }
 
     return render(request, 'home.html', contexto)
+
+
+def produtos_por_categoria(request, slug):
+    categoria = get_object_or_404(Categoria, slug=slug, ativa=True)
+
+    produtos = Produto.objects.filter(
+        categoria=categoria,
+        disponivel=True
+    ).order_by('ordem', '-criado_em')
+
+    contexto = {
+        'categoria': categoria,
+        'produtos': produtos,
+    }
+
+    return render(request, 'categoria.html', contexto)

@@ -5,13 +5,18 @@ from .models import Produto, Categoria
 def home(request):
     categorias = Categoria.objects.filter(ativa=True)
 
-    produtos = Produto.objects.filter(
+    produtos_destaque = Produto.objects.filter(
         destaque=True,
+        disponivel=True
+    ).order_by('ordem', '-criado_em')
+
+    produtos = Produto.objects.filter(
         disponivel=True
     ).order_by('ordem', '-criado_em')
 
     contexto = {
         'categorias': categorias,
+        'produtos_destaque': produtos_destaque,
         'produtos': produtos,
     }
 

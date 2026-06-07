@@ -338,22 +338,6 @@ body{
     font-size:28px;
 }
 
-.whatsapp{
-    position:fixed;
-    right:24px;
-    bottom:24px;
-    width:66px;
-    height:66px;
-    background:#25d366;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    text-decoration:none;
-    z-index:999;
-    box-shadow:0 12px 30px rgba(0,0,0,0.38);
-}
 
 @media(max-width:768px){
     .menu{

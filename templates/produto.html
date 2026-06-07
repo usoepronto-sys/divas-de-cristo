@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ produto.nome }} | Divas de Cristo{% endblock %}
+
+{% block content %}
+
+<section class="produto-detalhe">
+    <div class="produto-detalhe-container">
+
+        <div class="produto-detalhe-imagem">
+            {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+            {% endif %}
+        </div>
+
+        <div class="produto-detalhe-info">
+            <span class="produto-categoria">
+                {{ produto.categoria.nome }}
+            </span>
+
+            <h1>{{ produto.nome }}</h1>
+
+            <p class="produto-descricao">
+                {{ produto.descricao }}
+            </p>
+
+            {% if produto.tamanho %}
+            <p class="produto-tamanho">
+                Tamanho: <strong>{{ produto.tamanho }}</strong>
+            </p>
+            {% endif %}
+
+            <div class="produto-detalhe-preco">
+                R$ {{ produto.preco }}
+            </div>
+
+            <a
+                class="produto-whatsapp"
+                href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome }}"
+                target="_blank"
+            >
+                Reservar pelo WhatsApp
+            </a>
+
+            <a class="voltar-catalogo" href="{% url 'home' %}#todos-produtos">
+                Voltar ao catálogo
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

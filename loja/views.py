@@ -37,3 +37,17 @@ def produtos_por_categoria(request, slug):
     }
 
     return render(request, 'categoria.html', contexto)
+
+
+def detalhe_produto(request, id):
+    produto = get_object_or_404(
+        Produto,
+        id=id,
+        disponivel=True
+    )
+
+    contexto = {
+        'produto': produto,
+    }
+
+    return render(request, 'produto.html', contexto)

@@ -507,3 +507,118 @@ body{
 .category-card:active {
     text-decoration: none;
 }
+
+.produto-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.produto-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.produto-footer {
+    padding: 0 25px 25px;
+}
+
+.produto-detalhe {
+    padding: 160px 30px 100px;
+    background: #0b0b0b;
+    min-height: 100vh;
+}
+
+.produto-detalhe-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.produto-detalhe-imagem {
+    background: #141414;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.produto-detalhe-imagem img {
+    width: 100%;
+    height: 650px;
+    object-fit: cover;
+    display: block;
+}
+
+.produto-detalhe-info {
+    color: #fff;
+}
+
+.produto-categoria {
+    display: inline-block;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    margin-bottom: 18px;
+}
+
+.produto-detalhe-info h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    line-height: 1.05;
+    margin-bottom: 24px;
+}
+
+.produto-descricao {
+    color: #d7d7d7;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.produto-tamanho {
+    margin-bottom: 24px;
+    color: #eee;
+}
+
+.produto-detalhe-preco {
+    color: #d4af37;
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.produto-whatsapp {
+    display: inline-block;
+    background: #d4af37;
+    color: #000;
+    padding: 16px 34px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    margin-right: 16px;
+}
+
+.voltar-catalogo {
+    display: inline-block;
+    color: #d4af37;
+    text-decoration: none;
+    margin-top: 18px;
+}
+
+@media(max-width: 850px) {
+    .produto-detalhe-container {
+        grid-template-columns: 1fr;
+    }
+
+    .produto-detalhe-info h1 {
+        font-size: 42px;
+    }
+
+    .produto-detalhe-imagem img {
+        height: auto;
+    }
+}

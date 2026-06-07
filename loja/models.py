@@ -1,16 +1,16 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
+    ordem = models.PositiveIntegerField(default=0)
+    ativa = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Categoria'
         verbose_name_plural = 'Categorias'
+        ordering = ['ordem', 'nome']
 
     def __str__(self):
         return self.nome
@@ -25,12 +25,13 @@ class Produto(models.Model):
     imagem = models.ImageField(upload_to='produtos/')
     disponivel = models.BooleanField(default=True)
     destaque = models.BooleanField(default=False)
+    ordem = models.PositiveIntegerField(default=0)
     criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Produto'
         verbose_name_plural = 'Produtos'
-        ordering = ['-criado_em']
+        ordering = ['ordem', '-criado_em']
 
     def __str__(self):
         return self.nome

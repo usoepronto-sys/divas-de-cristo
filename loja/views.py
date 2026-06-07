@@ -1,8 +1,11 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Q
 from .models import Produto, Categoria
 
 
 def home(request):
+    busca = request.GET.get('busca', '').strip()
+
     categorias = Categoria.objects.all()
 
     produtos_destaque = Produto.objects.filter(
@@ -14,10 +17,19 @@ def home(request):
         disponivel=True
     ).order_by('-criado_em')
 
+    if busca:
+        produtos = produtos.filter(
+            Q(nome__icontains=busca) |
+            Q(descricao__icontains=busca) |
+            Q(tamanho__icontains=busca) |
+            Q(categoria__nome__icontains=busca)
+        )
+
     contexto = {
         'categorias': categorias,
         'produtos_destaque': produtos_destaque,
         'produtos': produtos,
+        'busca': busca,
     }
 
     return render(request, 'home.html', contexto)
@@ -51,9 +63,7 @@ def detalhe_produto(request, id):
         disponivel=True
     ).exclude(
         id=produto.id
-    ).order_by(
-        '-criado_em'
-    )[:4]
+    ).order_by('-criado_em')[:4]
 
     contexto = {
         'produto': produto,

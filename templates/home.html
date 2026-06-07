@@ -51,7 +51,7 @@
 
     <div class="produtos-grid">
         {% for produto in produtos_destaque %}
-        {% include 'includes/produto_card.html' %}
+            {% include 'includes/produto_card.html' %}
         {% empty %}
         <div class="empty-message">
             <h3>Nenhum destaque cadastrado</h3>
@@ -65,15 +65,41 @@
     <div class="section-title">
         <span>Catálogo</span>
         <h2>Todos os produtos</h2>
+        <p>Busque por nome, categoria, tamanho ou descrição.</p>
     </div>
+
+    <form class="busca-form" method="get" action="{% url 'home' %}#todos-produtos">
+        <input
+            type="text"
+            name="busca"
+            value="{{ busca }}"
+            placeholder="Buscar produto..."
+        >
+
+        <button type="submit">
+            Buscar
+        </button>
+
+        {% if busca %}
+        <a class="limpar-busca" href="{% url 'home' %}#todos-produtos">
+            Limpar
+        </a>
+        {% endif %}
+    </form>
+
+    {% if busca %}
+    <div class="resultado-busca">
+        Resultado da busca por: <strong>{{ busca }}</strong>
+    </div>
+    {% endif %}
 
     <div class="produtos-grid">
         {% for produto in produtos %}
-        {% include 'includes/produto_card.html' %}
+            {% include 'includes/produto_card.html' %}
         {% empty %}
         <div class="empty-message">
-            <h3>Em breve novos produtos</h3>
-            <p>Nossa coleção está sendo preparada com carinho.</p>
+            <h3>Nenhum produto encontrado</h3>
+            <p>Tente buscar por outro nome, categoria ou tamanho.</p>
         </div>
         {% endfor %}
     </div>

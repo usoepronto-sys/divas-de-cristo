@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from .models import Categoria, Produto
 
 
@@ -44,3 +46,83 @@ class ProdutoAdmin(admin.ModelAdmin):
     )
 
     list_per_page = 20
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class UsuarioAdmin(UserAdmin):
+    list_display = (
+        'username',
+        'first_name',
+        'email',
+        'is_active',
+        'is_staff',
+        'is_superuser',
+    )
+
+    list_filter = (
+        'is_active',
+        'is_staff',
+        'is_superuser',
+        'groups',
+    )
+
+    fieldsets = (
+        ('Dados de acesso', {
+            'fields': (
+                'username',
+                'password',
+            )
+        }),
+
+        ('Dados pessoais', {
+            'fields': (
+                'first_name',
+                'last_name',
+                'email',
+            )
+        }),
+
+        ('Tipo de acesso', {
+            'description': 'Escolha o grupo do usuário: Gerente ou Vendedor. Na maioria dos casos, não mexa nas permissões extras.',
+            'fields': (
+                'is_active',
+                'is_staff',
+                'groups',
+            )
+        }),
+
+        ('Permissões extras avançadas', {
+            'classes': ('collapse',),
+            'description': 'Use apenas quando quiser liberar permissões específicas além do grupo escolhido.',
+            'fields': (
+                'user_permissions',
+                'is_superuser',
+            )
+        }),
+
+        ('Datas importantes', {
+            'classes': ('collapse',),
+            'fields': (
+                'last_login',
+                'date_joined',
+            )
+        }),
+    )
+
+    add_fieldsets = (
+        ('Criar novo usuário', {
+            'classes': ('wide',),
+            'fields': (
+                'username',
+                'email',
+                'password1',
+                'password2',
+                'is_active',
+                'is_staff',
+                'groups',
+            ),
+        }),
+    )

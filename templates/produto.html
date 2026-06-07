@@ -76,6 +76,21 @@
     </div>
 </section>
 
+{% if produtos_relacionados %}
+<section class="section produtos-relacionados">
+    <div class="section-title">
+        <span>Você também pode gostar</span>
+        <h2>Peças relacionadas</h2>
+    </div>
+
+    <div class="produtos-grid">
+        {% for produto in produtos_relacionados %}
+            {% include 'includes/produto_card.html' %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
 <script>
 function trocarImagemProduto(src){
     const imagemPrincipal = document.getElementById('imagemPrincipalProduto');

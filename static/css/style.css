@@ -644,3 +644,7 @@ body{
     transform: scale(1.05);
     border-color: #d4af37;
 }
+
+.produtos-relacionados {
+    padding-top: 40px;
+}

@@ -46,8 +46,18 @@ def detalhe_produto(request, id):
         disponivel=True
     )
 
+    produtos_relacionados = Produto.objects.filter(
+        categoria=produto.categoria,
+        disponivel=True
+    ).exclude(
+        id=produto.id
+    ).order_by(
+        '-criado_em'
+    )[:4]
+
     contexto = {
         'produto': produto,
+        'produtos_relacionados': produtos_relacionados,
     }
 
     return render(request, 'produto.html', contexto)

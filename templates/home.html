@@ -88,7 +88,11 @@
         <div class="produto-card">
             <div class="produto-img">
                 {% if produto.imagem %}
-                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <img
+                        src="{{ produto.imagem.url }}"
+                        alt="{{ produto.nome }}"
+                        onclick="abrirImagem('{{ produto.imagem.url }}')"
+                    >
                 {% endif %}
             </div>
 
@@ -155,6 +159,22 @@
 <div class="footer-bottom">
     © 2026 Divas de Cristo. Todos os direitos reservados.
 </div>
+
+<div id="imagemModal" class="imagem-modal" onclick="fecharImagem()">
+    <span>&times;</span>
+    <img id="imagemModalConteudo" src="" alt="Imagem ampliada">
+</div>
+
+<script>
+function abrirImagem(src){
+    document.getElementById('imagemModal').style.display = 'flex';
+    document.getElementById('imagemModalConteudo').src = src;
+}
+
+function fecharImagem(){
+    document.getElementById('imagemModal').style.display = 'none';
+}
+</script>
 
 </body>
 </html>

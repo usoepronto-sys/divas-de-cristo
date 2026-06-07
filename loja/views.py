@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
+from django.core.paginator import Paginator
 from .models import Produto, Categoria
 
 
@@ -25,10 +26,14 @@ def home(request):
             Q(categoria__nome__icontains=busca)
         )
 
+    paginator = Paginator(produtos, 8)
+    pagina_numero = request.GET.get('page')
+    produtos_paginados = paginator.get_page(pagina_numero)
+
     contexto = {
         'categorias': categorias,
         'produtos_destaque': produtos_destaque,
-        'produtos': produtos,
+        'produtos': produtos_paginados,
         'busca': busca,
     }
 

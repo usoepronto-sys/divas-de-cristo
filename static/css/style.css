@@ -707,3 +707,32 @@ body{
     color: #d4af37;
     margin-bottom: 32px;
 }
+
+.paginacao {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.paginacao a {
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    color: #d4af37;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.paginacao a:hover {
+    background: #d4af37;
+    color: #111;
+}
+
+.paginacao span {
+    color: #fff;
+    font-weight: 500;
+}

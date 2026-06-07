@@ -103,6 +103,28 @@
         </div>
         {% endfor %}
     </div>
+
+    {% if produtos.has_other_pages %}
+    <div class="paginacao">
+
+        {% if produtos.has_previous %}
+            <a href="?page={{ produtos.previous_page_number }}{% if busca %}&busca={{ busca }}{% endif %}#todos-produtos">
+                ← Anterior
+            </a>
+        {% endif %}
+
+        <span>
+            Página {{ produtos.number }} de {{ produtos.paginator.num_pages }}
+        </span>
+
+        {% if produtos.has_next %}
+            <a href="?page={{ produtos.next_page_number }}{% if busca %}&busca={{ busca }}{% endif %}#todos-produtos">
+                Próxima →
+            </a>
+        {% endif %}
+
+    </div>
+    {% endif %}
 </section>
 
 <section class="about" id="sobre">

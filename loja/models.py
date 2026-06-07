@@ -17,16 +17,35 @@ class Categoria(models.Model):
 
 
 class Produto(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey(
+        Categoria,
+        on_delete=models.CASCADE
+    )
+
     nome = models.CharField(max_length=150)
     descricao = models.TextField()
-    preco = models.DecimalField(max_digits=10, decimal_places=2)
-    tamanho = models.CharField(max_length=50, blank=True)
-    imagem = models.ImageField(upload_to='produtos/')
+
+    preco = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
+    tamanho = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    imagem = models.ImageField(
+        upload_to='produtos/'
+    )
+
     disponivel = models.BooleanField(default=True)
     destaque = models.BooleanField(default=False)
     ordem = models.PositiveIntegerField(default=0)
-    criado_em = models.DateTimeField(auto_now_add=True)
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
 
     class Meta:
         verbose_name = 'Produto'
@@ -43,14 +62,21 @@ class FotoProduto(models.Model):
         on_delete=models.CASCADE,
         related_name='fotos'
     )
-    imagem = models.ImageField(upload_to='produtos/galeria/')
+
+    imagem = models.ImageField(
+        upload_to='produtos/galeria/'
+    )
+
     ordem = models.PositiveIntegerField(default=0)
-    criado_em = models.DateTimeField(auto_now_add=True)
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
 
     class Meta:
         verbose_name = 'Foto do Produto'
-        verbose_name_plural = 'Fotos dos Produtos'
+        verbose_name_plural = 'Fotos do Produto'
         ordering = ['ordem', '-criado_em']
 
     def __str__(self):
-        return f'Foto de {self.produto.nome}'
+        return f'{self.produto.nome} - Foto {self.id}'

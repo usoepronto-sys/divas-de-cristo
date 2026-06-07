@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.utils.html import format_html
 from .models import Categoria, Produto, FotoProduto
 
 
@@ -15,13 +16,25 @@ class CategoriaAdmin(admin.ModelAdmin):
 class FotoProdutoInline(admin.TabularInline):
     model = FotoProduto
     extra = 3
-    fields = ('imagem', 'ordem')
+    fields = ('preview', 'imagem', 'ordem')
+    readonly_fields = ('preview',)
     ordering = ('ordem', '-criado_em')
+
+    def preview(self, obj):
+        if obj and obj.imagem:
+            return format_html(
+                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;" />',
+                obj.imagem.url
+            )
+        return 'Sem imagem'
+
+    preview.short_description = 'Prévia'
 
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = (
+        'preview',
         'nome',
         'categoria',
         'preco',
@@ -52,16 +65,60 @@ class ProdutoAdmin(admin.ModelAdmin):
         'tamanho',
     )
 
+    readonly_fields = ('preview',)
     list_per_page = 20
     inlines = [FotoProdutoInline]
+
+    fieldsets = (
+        ('Informações principais', {
+            'fields': (
+                'preview',
+                'categoria',
+                'nome',
+                'descricao',
+                'preco',
+                'tamanho',
+                'imagem',
+            )
+        }),
+
+        ('Controle da vitrine', {
+            'fields': (
+                'disponivel',
+                'destaque',
+                'ordem',
+            )
+        }),
+    )
+
+    def preview(self, obj):
+        if obj and obj.imagem:
+            return format_html(
+                '<img src="{}" style="width:90px;height:120px;object-fit:cover;border-radius:10px;" />',
+                obj.imagem.url
+            )
+        return 'Sem imagem'
+
+    preview.short_description = 'Prévia'
 
 
 @admin.register(FotoProduto)
 class FotoProdutoAdmin(admin.ModelAdmin):
-    list_display = ('produto', 'ordem', 'criado_em')
+    list_display = ('preview', 'produto', 'ordem', 'criado_em')
     list_filter = ('produto', 'criado_em')
     search_fields = ('produto__nome',)
+    readonly_fields = ('preview',)
     list_per_page = 20
+
+    def preview(self, obj):
+        if obj and obj.imagem:
+            return format_html(
+                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;" />',
+                obj.imagem.url
+            )
+        return 'Sem imagem'
+
+    preview.short_description = 'Prévia'
 
 
 admin.site.unregister(User)

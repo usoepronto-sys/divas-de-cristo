@@ -7,15 +7,35 @@
 <section class="produto-detalhe">
     <div class="produto-detalhe-container">
 
-        <div class="produto-detalhe-imagem">
-            {% if produto.imagem %}
-                <img
-                    src="{{ produto.imagem.url }}"
-                    alt="{{ produto.nome }}"
-                    onclick="abrirImagem('{{ produto.imagem.url }}')"
-                    style="cursor: zoom-in;"
-                >
-            {% endif %}
+        <div>
+            <div class="produto-detalhe-imagem">
+                {% if produto.imagem %}
+                    <img
+                        src="{{ produto.imagem.url }}"
+                        alt="{{ produto.nome }}"
+                        onclick="abrirImagem('{{ produto.imagem.url }}')"
+                        style="cursor: zoom-in;"
+                    >
+                {% endif %}
+            </div>
+
+            <div class="produto-galeria">
+                {% if produto.imagem %}
+                    <img
+                        src="{{ produto.imagem.url }}"
+                        alt="{{ produto.nome }}"
+                        onclick="abrirImagem('{{ produto.imagem.url }}')"
+                    >
+                {% endif %}
+
+                {% for foto in produto.fotos.all %}
+                    <img
+                        src="{{ foto.imagem.url }}"
+                        alt="{{ produto.nome }}"
+                        onclick="abrirImagem('{{ foto.imagem.url }}')"
+                    >
+                {% endfor %}
+            </div>
         </div>
 
         <div class="produto-detalhe-info">

@@ -35,3 +35,22 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class FotoProduto(models.Model):
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.CASCADE,
+        related_name='fotos'
+    )
+    imagem = models.ImageField(upload_to='produtos/galeria/')
+    ordem = models.PositiveIntegerField(default=0)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Foto do Produto'
+        verbose_name_plural = 'Fotos dos Produtos'
+        ordering = ['ordem', '-criado_em']
+
+    def __str__(self):
+        return f'Foto de {self.produto.nome}'

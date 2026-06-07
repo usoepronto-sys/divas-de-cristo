@@ -622,3 +622,25 @@ body{
         height: auto;
     }
 }
+
+.produto-galeria {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.produto-galeria img {
+    width: 90px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: zoom-in;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    transition: 0.3s;
+}
+
+.produto-galeria img:hover {
+    transform: scale(1.05);
+    border-color: #d4af37;
+}

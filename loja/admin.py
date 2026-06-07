@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import Categoria, Produto
+from .models import Categoria, Produto, FotoProduto
 
 
 @admin.register(Categoria)
@@ -10,6 +10,13 @@ class CategoriaAdmin(admin.ModelAdmin):
     list_editable = ('ordem', 'ativa')
     prepopulated_fields = {'slug': ('nome',)}
     search_fields = ('nome',)
+
+
+class FotoProdutoInline(admin.TabularInline):
+    model = FotoProduto
+    extra = 3
+    fields = ('imagem', 'ordem')
+    ordering = ('ordem', '-criado_em')
 
 
 @admin.register(Produto)
@@ -45,6 +52,15 @@ class ProdutoAdmin(admin.ModelAdmin):
         'tamanho',
     )
 
+    list_per_page = 20
+    inlines = [FotoProdutoInline]
+
+
+@admin.register(FotoProduto)
+class FotoProdutoAdmin(admin.ModelAdmin):
+    list_display = ('produto', 'ordem', 'criado_em')
+    list_filter = ('produto', 'criado_em')
+    search_fields = ('produto__nome',)
     list_per_page = 20
 
 

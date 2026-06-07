@@ -9,7 +9,12 @@
 
         <div class="produto-detalhe-imagem">
             {% if produto.imagem %}
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                <img
+                    src="{{ produto.imagem.url }}"
+                    alt="{{ produto.nome }}"
+                    onclick="abrirImagem('{{ produto.imagem.url }}')"
+                    style="cursor: zoom-in;"
+                >
             {% endif %}
         </div>
 

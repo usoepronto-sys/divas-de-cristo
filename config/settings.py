@@ -20,6 +20,8 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
+    'jazzmin',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -107,3 +109,26 @@ CSRF_TRUSTED_ORIGINS = [
     'https://divasdecristo.net.br',
     'https://www.divasdecristo.net.br',
 ]
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Divas de Cristo Admin",
+    "site_header": "Divas de Cristo",
+    "site_brand": "Divas de Cristo",
+    "welcome_sign": "Bem-vindo ao painel Divas de Cristo",
+    "copyright": "Divas de Cristo",
+
+    "topmenu_links": [
+        {"name": "Ver site", "url": "/", "new_window": True},
+    ],
+
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "loja.Categoria": "fas fa-tags",
+        "loja.Produto": "fas fa-box-open",
+    },
+
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}

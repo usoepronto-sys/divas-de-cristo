@@ -490,3 +490,20 @@ body{
         text-align:center;
     }
 }
+
+.category-card {
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-card h3,
+.category-card p {
+    text-decoration: none;
+}
+
+.category-card:link,
+.category-card:visited,
+.category-card:hover,
+.category-card:active {
+    text-decoration: none;
+}

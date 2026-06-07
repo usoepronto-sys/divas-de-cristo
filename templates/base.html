@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -8,18 +9,15 @@
 
     <title>{% block title %}Divas de Cristo{% endblock %}</title>
 
-    <!-- FAVICON -->
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon.png' %}">
     <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}">
 
-    <!-- FONTES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
@@ -34,7 +32,46 @@
 
     {% include 'includes/footer.html' %}
 
-    <script src="{% static 'js/main.js' %}"></script>
+    <div id="imagemModal" class="imagem-modal" onclick="fecharImagem()">
+        <span onclick="fecharImagem()">&times;</span>
+        <img id="imagemModalConteudo" src="" alt="Imagem ampliada" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        function abrirImagem(src){
+            const modal = document.getElementById('imagemModal');
+            const imagem = document.getElementById('imagemModalConteudo');
+
+            if(modal && imagem){
+                imagem.src = src;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function fecharImagem(){
+            const modal = document.getElementById('imagemModal');
+            const imagem = document.getElementById('imagemModalConteudo');
+
+            if(modal && imagem){
+                modal.style.display = 'none';
+                imagem.src = '';
+            }
+        }
+
+        function trocarImagemProduto(src){
+            const imagemPrincipal = document.getElementById('imagemPrincipalProduto');
+
+            if(imagemPrincipal){
+                imagemPrincipal.src = src;
+            }
+        }
+
+        document.addEventListener('keydown', function(event){
+            if(event.key === 'Escape'){
+                fecharImagem();
+            }
+        });
+    </script>
 
 </body>
 </html>

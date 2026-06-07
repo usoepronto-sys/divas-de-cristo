@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 
-from .models import Categoria, Produto, FotoProduto
+from .models import Categoria, Produto, FotoProduto, Reserva
 
 
 @admin.register(Categoria)
@@ -122,6 +122,110 @@ class FotoProdutoAdmin(admin.ModelAdmin):
     preview.short_description = 'Prévia'
 
 
+@admin.register(Reserva)
+class ReservaAdmin(admin.ModelAdmin):
+    list_display = (
+        'cliente',
+        'whatsapp',
+        'produto',
+        'status_formatado',
+        'criado_em',
+        'atualizado_em',
+    )
+
+    list_filter = (
+        'status',
+        'produto__categoria',
+        'criado_em',
+        'atualizado_em',
+    )
+
+    search_fields = (
+        'cliente',
+        'whatsapp',
+        'produto__nome',
+        'observacao',
+    )
+
+    list_editable = (
+        'whatsapp',
+    )
+
+    readonly_fields = (
+        'criado_em',
+        'atualizado_em',
+    )
+
+    list_per_page = 20
+
+    fieldsets = (
+        ('Dados da cliente', {
+            'fields': (
+                'cliente',
+                'whatsapp',
+            )
+        }),
+
+        ('Produto e atendimento', {
+            'fields': (
+                'produto',
+                'status',
+                'observacao',
+            )
+        }),
+
+        ('Datas', {
+            'classes': ('collapse',),
+            'fields': (
+                'criado_em',
+                'atualizado_em',
+            )
+        }),
+    )
+
+    actions = (
+        'marcar_em_atendimento',
+        'marcar_reservado',
+        'marcar_vendido',
+        'marcar_cancelado',
+    )
+
+    def status_formatado(self, obj):
+        cores = {
+            Reserva.STATUS_NOVO: '#38bdf8',
+            Reserva.STATUS_ATENDIMENTO: '#facc15',
+            Reserva.STATUS_RESERVADO: '#a78bfa',
+            Reserva.STATUS_VENDIDO: '#22c55e',
+            Reserva.STATUS_CANCELADO: '#ef4444',
+        }
+
+        cor = cores.get(obj.status, '#ffffff')
+
+        return format_html(
+            '<strong style="color:{};">{}</strong>',
+            cor,
+            obj.get_status_display()
+        )
+
+    status_formatado.short_description = 'Status'
+
+    @admin.action(description='Marcar como Em atendimento')
+    def marcar_em_atendimento(self, request, queryset):
+        queryset.update(status=Reserva.STATUS_ATENDIMENTO)
+
+    @admin.action(description='Marcar como Reservado')
+    def marcar_reservado(self, request, queryset):
+        queryset.update(status=Reserva.STATUS_RESERVADO)
+
+    @admin.action(description='Marcar como Vendido')
+    def marcar_vendido(self, request, queryset):
+        queryset.update(status=Reserva.STATUS_VENDIDO)
+
+    @admin.action(description='Marcar como Cancelado')
+    def marcar_cancelado(self, request, queryset):
+        queryset.update(status=Reserva.STATUS_CANCELADO)
+
+
 admin.site.unregister(User)
 
 
@@ -220,7 +324,12 @@ def dashboard_index(request, extra_context=None):
     extra_context['produtos_indisponiveis'] = Produto.objects.filter(disponivel=False).count()
     extra_context['produtos_destaque'] = Produto.objects.filter(destaque=True, disponivel=True).count()
     extra_context['total_categorias'] = Categoria.objects.count()
+    extra_context['total_reservas'] = Reserva.objects.count()
+    extra_context['reservas_novas'] = Reserva.objects.filter(status=Reserva.STATUS_NOVO).count()
+    extra_context['reservas_em_atendimento'] = Reserva.objects.filter(status=Reserva.STATUS_ATENDIMENTO).count()
+    extra_context['reservas_vendidas'] = Reserva.objects.filter(status=Reserva.STATUS_VENDIDO).count()
     extra_context['ultimos_produtos'] = Produto.objects.select_related('categoria').order_by('-criado_em')[:5]
+    extra_context['ultimas_reservas'] = Reserva.objects.select_related('produto').order_by('-criado_em')[:5]
 
     return original_index(request, extra_context)
 

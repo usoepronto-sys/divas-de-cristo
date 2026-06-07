@@ -80,3 +80,54 @@ class FotoProduto(models.Model):
 
     def __str__(self):
         return f'{self.produto.nome} - Foto {self.id}'
+
+
+class Reserva(models.Model):
+    STATUS_NOVO = 'novo'
+    STATUS_ATENDIMENTO = 'atendimento'
+    STATUS_RESERVADO = 'reservado'
+    STATUS_VENDIDO = 'vendido'
+    STATUS_CANCELADO = 'cancelado'
+
+    STATUS_CHOICES = [
+        (STATUS_NOVO, 'Novo'),
+        (STATUS_ATENDIMENTO, 'Em atendimento'),
+        (STATUS_RESERVADO, 'Reservado'),
+        (STATUS_VENDIDO, 'Vendido'),
+        (STATUS_CANCELADO, 'Cancelado'),
+    ]
+
+    cliente = models.CharField(max_length=150)
+    whatsapp = models.CharField(max_length=30)
+
+    produto = models.ForeignKey(
+        Produto,
+        on_delete=models.PROTECT,
+        related_name='reservas'
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default=STATUS_NOVO
+    )
+
+    observacao = models.TextField(
+        blank=True
+    )
+
+    criado_em = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    atualizado_em = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+        verbose_name = 'Reserva'
+        verbose_name_plural = 'Reservas'
+        ordering = ['-criado_em']
+
+    def __str__(self):
+        return f'{self.cliente} - {self.produto.nome}'

@@ -84,10 +84,12 @@
     </div>
 
     <div class="produtos-grid">
-        {% for produto in produtos %}
+        {% for produto in produtos_destaque %}
         <div class="produto-card">
             <div class="produto-img">
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                {% endif %}
             </div>
 
             <div class="produto-info">
@@ -96,6 +98,7 @@
 
                 <div class="produto-footer">
                     <div class="preco">R$ {{ produto.preco }}</div>
+
                     <a href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome }}" target="_blank">
                         Reservar
                     </a>

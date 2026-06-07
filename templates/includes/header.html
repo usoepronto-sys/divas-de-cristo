@@ -8,7 +8,11 @@
     <div class="navbar">
         <div class="logo">Divas de Cristo</div>
 
-        <nav class="menu">
+        <button class="mobile-menu-toggle" onclick="abrirMenuMobile()" aria-label="Abrir menu">
+            ☰
+        </button>
+
+        <nav class="menu" id="menuMobile">
             <a href="{% url 'home' %}#inicio">Início</a>
             <a href="{% url 'home' %}#colecao">Coleção</a>
             <a href="{% url 'home' %}#destaques">Destaques</a>
@@ -17,9 +21,24 @@
             <a href="/admin/" target="_blank">Admin</a>
 
             <div class="menu-actions">
-                <a class="menu-btn instagram-btn" href="https://www.instagram.com/diva_de_cristo2024?igsh=eTc4M3puaTdzMTgy" target="_blank">Instagram</a>
-                <a class="menu-btn" href="https://wa.me/5519994120578" target="_blank">WhatsApp</a>
+                <a class="menu-btn instagram-btn" href="https://www.instagram.com/diva_de_cristo2024?igsh=eTc4M3puaTdzMTgy" target="_blank">
+                    Instagram
+                </a>
+
+                <a class="menu-btn" href="https://wa.me/5519994120578" target="_blank">
+                    WhatsApp
+                </a>
             </div>
         </nav>
     </div>
 </header>
+
+<script>
+function abrirMenuMobile(){
+    const menu = document.getElementById('menuMobile');
+
+    if(menu){
+        menu.classList.toggle('menu-aberto');
+    }
+}
+</script>

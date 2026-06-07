@@ -62,7 +62,7 @@
 
             <a
                 class="produto-whatsapp"
-                href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome }}"
+                href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome|urlencode }}"
                 target="_blank"
             >
                 Reservar pelo WhatsApp
@@ -84,8 +84,8 @@
     </div>
 
     <div class="produtos-grid">
-        {% for produto in produtos_relacionados %}
-            {% include 'includes/produto_card.html' %}
+        {% for produto_relacionado in produtos_relacionados %}
+            {% include 'includes/produto_card.html' with produto=produto_relacionado %}
         {% endfor %}
     </div>
 </section>

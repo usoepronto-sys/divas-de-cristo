@@ -1,94 +1,25 @@
-{% extends 'base.html' %}
-
-{% block title %}{{ produto.nome }} | Divas de Cristo{% endblock %}
-
-{% block content %}
-
-<section class="produto-detalhe">
-    <div class="produto-detalhe-container">
-
-        <div>
-            <div class="produto-detalhe-imagem">
-                {% if produto.imagem %}
-                    <img
-                        id="imagemPrincipalProduto"
-                        src="{{ produto.imagem.url }}"
-                        alt="{{ produto.nome }}"
-                        onclick="abrirImagem(this.src)"
-                        style="cursor: zoom-in;"
-                    >
-                {% endif %}
-            </div>
-
-            <div class="produto-galeria">
-                {% if produto.imagem %}
-                    <img
-                        src="{{ produto.imagem.url }}"
-                        alt="{{ produto.nome }}"
-                        onclick="trocarImagemProduto('{{ produto.imagem.url }}')"
-                    >
-                {% endif %}
-
-                {% for foto in produto.fotos.all %}
-                    <img
-                        src="{{ foto.imagem.url }}"
-                        alt="{{ produto.nome }}"
-                        onclick="trocarImagemProduto('{{ foto.imagem.url }}')"
-                    >
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="produto-detalhe-info">
-            <span class="produto-categoria">
-                {{ produto.categoria.nome }}
-            </span>
-
-            <h1>{{ produto.nome }}</h1>
-
-            <p class="produto-descricao">
-                {{ produto.descricao }}
-            </p>
-
-            {% if produto.tamanho %}
-            <p class="produto-tamanho">
-                Tamanho: <strong>{{ produto.tamanho }}</strong>
-            </p>
+<div class="produto-card">
+    <a href="{% url 'detalhe_produto' produto.id %}" class="produto-link">
+        <div class="produto-img">
+            {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
             {% endif %}
-
-            <div class="produto-detalhe-preco">
-                R$ {{ produto.preco }}
-            </div>
-
-            <a
-                class="produto-whatsapp"
-                href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20neste%20produto%20da%20Divas%20de%20Cristo:%0A%0AProduto:%20{{ produto.nome|urlencode }}%0ACategoria:%20{{ produto.categoria.nome|urlencode }}%0ATamanho:%20{{ produto.tamanho|default:'Não informado'|urlencode }}%0AValor:%20R$%20{{ produto.preco }}%0ALink:%20https://divasdecristo.net.br{% url 'detalhe_produto' produto.id %}"
-                target="_blank"
-            >
-                Reservar pelo WhatsApp
-            </a>
-
-            <a class="voltar-catalogo" href="{% url 'home' %}#todos-produtos">
-                Voltar ao catálogo
-            </a>
         </div>
 
-    </div>
-</section>
+        <div class="produto-info">
+            <h3>{{ produto.nome }}</h3>
+            <p>{{ produto.descricao }}</p>
+        </div>
+    </a>
 
-{% if produtos_relacionados %}
-<section class="section produtos-relacionados">
-    <div class="section-title">
-        <span>Selecionamos para você</span>
-        <h2>Você também pode gostar</h2>
-    </div>
+    <div class="produto-footer">
+        <div class="preco">R$ {{ produto.preco }}</div>
 
-    <div class="produtos-grid">
-        {% for produto in produtos_relacionados %}
-            {% include 'includes/produto_card.html' %}
-        {% endfor %}
+        <a
+            href="https://wa.me/5519994120578?text=Olá,%20tenho%20interesse%20no%20produto:%20{{ produto.nome|urlencode }}"
+            target="_blank"
+        >
+            Reservar
+        </a>
     </div>
-</section>
-{% endif %}
-
-{% endblock %}
+</div>

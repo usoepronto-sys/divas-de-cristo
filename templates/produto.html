@@ -11,9 +11,10 @@
             <div class="produto-detalhe-imagem">
                 {% if produto.imagem %}
                     <img
+                        id="imagemPrincipalProduto"
                         src="{{ produto.imagem.url }}"
                         alt="{{ produto.nome }}"
-                        onclick="abrirImagem('{{ produto.imagem.url }}')"
+                        onclick="abrirImagem(this.src)"
                         style="cursor: zoom-in;"
                     >
                 {% endif %}
@@ -24,7 +25,7 @@
                     <img
                         src="{{ produto.imagem.url }}"
                         alt="{{ produto.nome }}"
-                        onclick="abrirImagem('{{ produto.imagem.url }}')"
+                        onclick="trocarImagemProduto('{{ produto.imagem.url }}')"
                     >
                 {% endif %}
 
@@ -32,7 +33,7 @@
                     <img
                         src="{{ foto.imagem.url }}"
                         alt="{{ produto.nome }}"
-                        onclick="abrirImagem('{{ foto.imagem.url }}')"
+                        onclick="trocarImagemProduto('{{ foto.imagem.url }}')"
                     >
                 {% endfor %}
             </div>
@@ -74,5 +75,15 @@
 
     </div>
 </section>
+
+<script>
+function trocarImagemProduto(src){
+    const imagemPrincipal = document.getElementById('imagemPrincipalProduto');
+
+    if(imagemPrincipal){
+        imagemPrincipal.src = src;
+    }
+}
+</script>
 
 {% endblock %}

@@ -12,7 +12,7 @@ def home(request):
     produtos_destaque = Produto.objects.filter(
         destaque=True,
         disponivel=True
-    ).order_by('-criado_em')
+    ).order_by('-criado_em')[:4]
 
     produtos = Produto.objects.filter(
         disponivel=True
@@ -26,7 +26,7 @@ def home(request):
             Q(categoria__nome__icontains=busca)
         )
 
-    paginator = Paginator(produtos, 8)
+    paginator = Paginator(produtos, 4)
     pagina_numero = request.GET.get('page')
     produtos_paginados = paginator.get_page(pagina_numero)
 

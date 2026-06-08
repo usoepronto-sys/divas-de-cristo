@@ -114,11 +114,9 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -129,23 +127,47 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 JAZZMIN_SETTINGS = {
-    "site_title": "Divas de Cristo Admin",
+    "site_title": "Divas de Cristo",
     "site_header": "Divas de Cristo",
     "site_brand": "Divas de Cristo",
-    "welcome_sign": "Bem-vindo ao painel Divas de Cristo",
+    "welcome_sign": "Bem-vindo ao painel da loja",
     "copyright": "Divas de Cristo",
 
     "topmenu_links": [
         {"name": "Ver site", "url": "/", "new_window": True},
     ],
 
+    "order_with_respect_to": [
+        "loja",
+        "auth",
+    ],
+
     "icons": {
         "auth": "fas fa-users-cog",
-        "auth.user": "fas fa-user",
-        "auth.Group": "fas fa-users",
+        "auth.user": "fas fa-users",
+        "auth.Group": "fas fa-user-shield",
         "loja.Categoria": "fas fa-tags",
         "loja.Produto": "fas fa-box-open",
     },
+
+    "custom_links": {
+        "auth": [
+            {
+                "name": "Cadastro de Usuários",
+                "url": "admin:auth_user_changelist",
+                "icon": "fas fa-users",
+            },
+            {
+                "name": "Perfis de Acesso",
+                "url": "admin:auth_group_changelist",
+                "icon": "fas fa-user-shield",
+            },
+        ],
+    },
+
+    "hide_models": [
+        "auth.Group",
+    ],
 
     "show_sidebar": True,
     "navigation_expanded": True,

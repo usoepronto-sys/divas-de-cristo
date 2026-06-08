@@ -178,3 +178,8 @@ JAZZMIN_SETTINGS = {
     "show_sidebar": True,
     "navigation_expanded": True,
 }
+
+JAZZMIN_SETTINGS["app_labels"] = {
+    "auth": "Cadastro de Usuários",
+    "loja": "Loja",
+}

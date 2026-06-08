@@ -47,6 +47,8 @@ class ProdutoAdmin(admin.ModelAdmin):
         'destaque',
         'ordem',
         'criado_em',
+        'save_as_continue = False',
+        'save_on_top = True',
     )
 
     list_editable = (
@@ -74,7 +76,7 @@ class ProdutoAdmin(admin.ModelAdmin):
     inlines = [FotoProdutoInline]
 
     fieldsets = (
-        ('Informações principais', {
+        ('Informações principais — após escolher a imagem, clique em "Salvar e continuar editando" para mostrar a prévia', {
             'fields': (
                 'preview_grande',
                 'categoria',

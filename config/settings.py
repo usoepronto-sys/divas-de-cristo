@@ -156,24 +156,7 @@ JAZZMIN_SETTINGS = {
         "loja.Produto": "fas fa-box-open",
     },
 
-    "custom_links": {
-        "auth": [
-            {
-                "name": "Cadastro de Usuários",
-                "url": "admin:auth_user_changelist",
-                "icon": "fas fa-users",
-            },
-            {
-                "name": "Perfis de Acesso",
-                "url": "admin:auth_group_changelist",
-                "icon": "fas fa-user-shield",
-            },
-        ],
-    },
-
-    "hide_models": [
-        "auth.Group",
-    ],
+    
 
     "show_sidebar": True,
     "navigation_expanded": True,

@@ -12,6 +12,7 @@ class CategoriaAdmin(admin.ModelAdmin):
     list_editable = ('ordem', 'ativa')
     prepopulated_fields = {'slug': ('nome',)}
     search_fields = ('nome',)
+    list_per_page = 20
 
 
 class FotoProdutoInline(admin.TabularInline):
@@ -24,7 +25,7 @@ class FotoProdutoInline(admin.TabularInline):
     def preview(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;" />',
+                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />',
                 obj.imagem.url
             )
         return 'Sem imagem'
@@ -95,12 +96,12 @@ class ProdutoAdmin(admin.ModelAdmin):
     def preview(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:90px;height:120px;object-fit:cover;border-radius:10px;" />',
+                '<img src="{}" style="width:70px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" />',
                 obj.imagem.url
             )
         return 'Sem imagem'
 
-    preview.short_description = 'Prévia'
+    preview.short_description = 'Foto'
 
 
 @admin.register(FotoProduto)
@@ -114,7 +115,7 @@ class FotoProdutoAdmin(admin.ModelAdmin):
     def preview(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;" />',
+                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />',
                 obj.imagem.url
             )
         return 'Sem imagem'

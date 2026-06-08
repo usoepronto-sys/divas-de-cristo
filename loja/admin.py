@@ -25,7 +25,9 @@ class FotoProdutoInline(admin.TabularInline):
     def preview(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />',
+                '<a href="{0}" target="_blank">'
+                '<img src="{0}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />'
+                '</a>',
                 obj.imagem.url
             )
         return 'Sem imagem'
@@ -36,7 +38,7 @@ class FotoProdutoInline(admin.TabularInline):
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = (
-        'preview',
+        'preview_lista',
         'nome',
         'categoria',
         'preco',
@@ -67,14 +69,14 @@ class ProdutoAdmin(admin.ModelAdmin):
         'tamanho',
     )
 
-    readonly_fields = ('preview',)
+    readonly_fields = ('preview_grande',)
     list_per_page = 20
     inlines = [FotoProdutoInline]
 
     fieldsets = (
         ('Informações principais', {
             'fields': (
-                'preview',
+                'preview_grande',
                 'categoria',
                 'nome',
                 'descricao',
@@ -93,15 +95,54 @@ class ProdutoAdmin(admin.ModelAdmin):
         }),
     )
 
-    def preview(self, obj):
+    def preview_lista(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:70px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #ddd;" />',
+                '<a href="{0}" target="_blank">'
+                '<img src="{0}" style="width:60px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />'
+                '</a>',
                 obj.imagem.url
             )
         return 'Sem imagem'
 
-    preview.short_description = 'Foto'
+    preview_lista.short_description = 'Foto'
+
+    def preview_grande(self, obj):
+        if obj and obj.imagem:
+            return format_html(
+                '''
+                <a href="{0}" target="_blank">
+                    <img src="{0}"
+                         style="
+                            width:220px;
+                            max-width:100%;
+                            border-radius:12px;
+                            border:1px solid #ddd;
+                            box-shadow:0 3px 10px rgba(0,0,0,.15);
+                         ">
+                </a>
+                ''',
+                obj.imagem.url
+            )
+
+        return format_html(
+            '''
+            <div style="
+                width:220px;
+                height:280px;
+                border:2px dashed #ccc;
+                border-radius:12px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                color:#888;
+            ">
+                Sem imagem
+            </div>
+            '''
+        )
+
+    preview_grande.short_description = 'Prévia da imagem principal'
 
 
 @admin.register(FotoProduto)
@@ -115,7 +156,9 @@ class FotoProdutoAdmin(admin.ModelAdmin):
     def preview(self, obj):
         if obj and obj.imagem:
             return format_html(
-                '<img src="{}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />',
+                '<a href="{0}" target="_blank">'
+                '<img src="{0}" style="width:80px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #ddd;" />'
+                '</a>',
                 obj.imagem.url
             )
         return 'Sem imagem'

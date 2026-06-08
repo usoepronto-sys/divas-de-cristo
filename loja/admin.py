@@ -37,6 +37,9 @@ class FotoProdutoInline(admin.TabularInline):
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
+    save_as_continue = False
+    save_on_top = True
+
     list_display = (
         'preview_lista',
         'nome',
@@ -47,8 +50,6 @@ class ProdutoAdmin(admin.ModelAdmin):
         'destaque',
         'ordem',
         'criado_em',
-        'save_as_continue = False',
-        'save_on_top = True',
     )
 
     list_editable = (

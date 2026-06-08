@@ -1,9 +1,12 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.utils.html import format_html
 
 from .models import Categoria, Produto, FotoProduto, Reserva
+
+
+USUARIO_PROTEGIDO = 'admin'
 
 
 @admin.register(Categoria)
@@ -351,6 +354,69 @@ class UsuarioAdmin(UserAdmin):
             ),
         }),
     )
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.username == USUARIO_PROTEGIDO:
+            return False
+
+        return super().has_delete_permission(request, obj)
+
+    def delete_model(self, request, obj):
+        if obj.username == USUARIO_PROTEGIDO:
+            messages.error(
+                request,
+                f'O usuário "{USUARIO_PROTEGIDO}" é protegido e não pode ser excluído.'
+            )
+            return
+
+        super().delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        protegidos = queryset.filter(username=USUARIO_PROTEGIDO)
+
+        if protegidos.exists():
+            messages.warning(
+                request,
+                f'O usuário "{USUARIO_PROTEGIDO}" foi removido da exclusão por ser protegido.'
+            )
+
+        queryset = queryset.exclude(username=USUARIO_PROTEGIDO)
+        super().delete_queryset(request, queryset)
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            antigo = User.objects.filter(pk=obj.pk).first()
+
+            if antigo and antigo.username == USUARIO_PROTEGIDO:
+                obj.username = USUARIO_PROTEGIDO
+                obj.is_active = True
+                obj.is_staff = True
+                obj.is_superuser = True
+
+                messages.info(
+                    request,
+                    f'O usuário "{USUARIO_PROTEGIDO}" é protegido. '
+                    'Ele continuará ativo, como membro da equipe e superusuário.'
+                )
+
+        super().save_model(request, obj, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = list(super().get_readonly_fields(request, obj))
+
+        if obj and obj.username == USUARIO_PROTEGIDO:
+            campos_protegidos = [
+                'username',
+                'is_active',
+                'is_staff',
+                'is_superuser',
+            ]
+
+            for campo in campos_protegidos:
+                if campo not in readonly_fields:
+                    readonly_fields.append(campo)
+
+        return readonly_fields
 
 
 admin.site.index_template = 'admin/dashboard.html'
